@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Заявки</title>
+</head>
+<body>
+    <h1>Список заявок</h1>
+    <table border="1">
+        <tr>
+            <th>Дата</th><th>Кто</th><th>Код</th><th>Название</th><th>Кол-во</th><th>Комментарий</th><th>Статус</th><th>Действие</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+            <td><a href="/confirm/{{ loop.index0 }}">Подтвердить</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

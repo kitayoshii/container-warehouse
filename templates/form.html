@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Заявка на запчасть</title>
+</head>
+<body>
+    <h1>Форма заявки</h1>
+    <form method="post" action="/submit">
+        <label>Кто отправляет: <input type="text" name="kto" required></label><br>
+        <label>Код запчасти: <input type="text" name="code" required></label><br>
+        <label>Название: <input type="text" name="name" required></label><br>
+        <label>Количество: <input type="number" name="count" required></label><br>
+        <label>Комментарий: <input type="text" name="comment"></label><br>
+        <button type="submit">Отправить</button>
+    </form>
+</body>
+</html>
