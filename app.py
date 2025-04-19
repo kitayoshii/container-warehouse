@@ -2,35 +2,19 @@ from flask import Flask, render_template, request, redirect
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
-from dotenv import load_dotenv
 import os
 import json
 
-# Загрузка переменных окружения
-load_dotenv()
-
-# Настройка доступа к Google Sheets через .env
+# Чтение JSON-ключа из переменной окружения GOOGLE_CREDENTIALS
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-
-credentials_dict = {
-    "type": os.getenv("GOOGLE_TYPE"),
-    "project_id": os.getenv("GOOGLE_PROJECT_ID"),
-    "private_key_id": os.getenv("GOOGLE_PRIVATE_KEY_ID"),
-    "private_key": os.getenv("GOOGLE_PRIVATE_KEY").replace("\n", "\n").replace('\\n', '\n'),
-    "client_email": os.getenv("GOOGLE_CLIENT_EMAIL"),
-    "client_id": os.getenv("GOOGLE_CLIENT_ID"),
-    "auth_uri": os.getenv("GOOGLE_AUTH_URI"),
-    "token_uri": os.getenv("GOOGLE_TOKEN_URI"),
-    "auth_provider_x509_cert_url": os.getenv("GOOGLE_AUTH_PROVIDER_X509_CERT_URL"),
-    "client_x509_cert_url": os.getenv("GOOGLE_CLIENT_X509_CERT_URL")
-}
-
-creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
+creds_json = json.loads(os.environ['GOOGLE_CREDENTIALS'])
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_json, scope)
 client = gspread.authorize(creds)
 
-# Таблицы
+# Подключение к Google Sheets
 zayavki_sheet = client.open("Контейнер Склад").worksheet("zayavki")
 
+# Flask-приложение
 app = Flask(__name__)
 
 @app.route("/")
